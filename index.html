@@ -6,14 +6,13 @@
         <audio id="player1" controls></audio>
         <button id="start">start</button><button id="stop">stop</button>
 
-        <!-- <script src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/OpusMediaRecorder.umd.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/encoderWorker.umd.js"></script> -->
-        <script src="https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/OpusMediaRecorder.umd.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/encoderWorker.umd.js"></script>
         <script type="module">
+            import "https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/OpusMediaRecorder.umd.js";
+            import "https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/encoderWorker.umd.js";
+
             const workerOptions = {
-            OggOpusEncoderWasmPath: 'https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/OggOpusEncoder.wasm',
-            WebMOpusEncoderWasmPath: 'https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/WebMOpusEncoder.wasm'
+                OggOpusEncoderWasmPath: 'https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/OggOpusEncoder.wasm',
+                WebMOpusEncoderWasmPath: 'https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/WebMOpusEncoder.wasm'
             };
             window.MediaRecorder = OpusMediaRecorder;
 
@@ -25,7 +24,7 @@
                     // audioBitsPerSecond: 96*1000
                 }, workerOptions);
                 document.querySelector("#start").addEventListener("click", ()=> MRecorder.start());
-                document.querySelector("#stop").addEventListener("click", ()=>MRecorder.stop());
+                document.querySelector("#stop").addEventListener("click", ()=> MRecorder.stop());
                 MRecorder.addEventListener('dataavailable', (evt) => {
                     player1.src = window.URL.createObjectURL(evt.data);
                 });
