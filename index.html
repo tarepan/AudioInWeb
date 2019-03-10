@@ -15,7 +15,7 @@
                 WebMOpusEncoderWasmPath: 'https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/WebMOpusEncoder.wasm'
             };
             window.MediaRecorder = OpusMediaRecorder;
-
+            let audio_uri;
             const player1 = document.querySelector("#player1");
             (async ()=>{
                 const micMS = await navigator.mediaDevices.getUserMedia({audio:true, video: false});
@@ -25,8 +25,20 @@
                 }, workerOptions);
                 document.querySelector("#start").addEventListener("click", ()=> MRecorder.start());
                 document.querySelector("#stop").addEventListener("click", ()=> MRecorder.stop());
-                MRecorder.addEventListener('dataavailable', (evt) => {
-                    player1.src = window.URL.createObjectURL(evt.data);
+                MRecorder.addEventListener('dataavailable', async (evt) => {
+                    const audio_uri = window.URL.createObjectURL(evt.data);
+                    const playable = player1.canPlayType("audio/ogg");
+                    if(playable != ""){
+                        player1.src = audio_uri;
+                    }else{
+                        console.log("imcompatible with audio/ogg.");
+                        let _ = await import("https://cdn.jsdelivr.net/npm/howler@2.1.1/dist/howler.min.js");
+                        const sound = new Howl({
+                            src: [audio_uri],
+                            format: ["ogg"]
+                        });
+                        sound.play();
+                    }
                 });
             })();
         </script>
