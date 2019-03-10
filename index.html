@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
-
     <head>
-
     </head>
     <body>
         <audio id="player1" controls></audio>
@@ -17,10 +15,7 @@
             OggOpusEncoderWasmPath: 'https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/OggOpusEncoder.wasm',
             WebMOpusEncoderWasmPath: 'https://cdn.jsdelivr.net/npm/opus-media-recorder@0.7.16/WebMOpusEncoder.wasm'
             };
-            console.log(`support: ${window.MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')}`);
-            console.log(OpusMediaRecorder);
             window.MediaRecorder = OpusMediaRecorder;
-            console.log(`support: ${window.MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')}`);
 
             const player1 = document.querySelector("#player1");
             (async ()=>{
@@ -32,7 +27,6 @@
                 document.querySelector("#start").addEventListener("click", ()=> MRecorder.start());
                 document.querySelector("#stop").addEventListener("click", ()=>MRecorder.stop());
                 MRecorder.addEventListener('dataavailable', (evt) => {
-                    console.log(evt);
                     player1.src = window.URL.createObjectURL(evt.data);
                 });
             })();
