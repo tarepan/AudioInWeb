@@ -6,6 +6,7 @@
     </head>
     <body>
         <audio id="player1" controls></audio>
+        <button id="start">start</button><button id="stop">stop</button>
 
         <!-- <script src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/OpusMediaRecorder.umd.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/opus-media-recorder@latest/encoderWorker.umd.js"></script> -->
@@ -22,9 +23,14 @@
             (async ()=>{
                 const micMS = await navigator.mediaDevices.getUserMedia({audio:true});
                 const MRecorder = new MediaRecorder(micMS, {
-                    mineType:"audio/ogg; ",
+                    mineType:"audio/ogg",
                     audioBitsPerSecond: 96*1000
                 }, workerOptions);
+                document.querySelector("#start").addEventListener("click", MRecorder.start);
+                document.querySelector("#stop").addEventListener("click", MRecorder.stop);
+                MRecorder.addEventListener('dataavailable', (evt) => {
+                    player1.srcObject = evt.data;
+                });
             })();
         </script>
     </body>
